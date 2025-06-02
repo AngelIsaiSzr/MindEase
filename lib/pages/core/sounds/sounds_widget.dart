@@ -1,9 +1,11 @@
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'sounds_model.dart';
@@ -19,15 +21,33 @@ class SoundsWidget extends StatefulWidget {
   State<SoundsWidget> createState() => _SoundsWidgetState();
 }
 
-class _SoundsWidgetState extends State<SoundsWidget> {
+class _SoundsWidgetState extends State<SoundsWidget>
+    with TickerProviderStateMixin {
   late SoundsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => SoundsModel());
+
+    animationsMap.addAll({
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+    });
   }
 
   @override
@@ -159,7 +179,7 @@ class _SoundsWidgetState extends State<SoundsWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'listen now',
+                              'Escuchar ahora',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -188,11 +208,12 @@ class _SoundsWidgetState extends State<SoundsWidget> {
                     ],
                   ),
                 ),
-              ),
+              ).animateOnPageLoad(
+                  animationsMap['containerOnPageLoadAnimation']!),
             ),
             Container(
               width: double.infinity,
-              height: MediaQuery.sizeOf(context).height * 0.53,
+              height: MediaQuery.sizeOf(context).height * 0.447,
               decoration: BoxDecoration(),
               child: ListView(
                 padding: EdgeInsets.zero,
@@ -226,6 +247,21 @@ class _SoundsWidgetState extends State<SoundsWidget> {
                                     color: FlutterFlowTheme.of(context).accent2,
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: CachedNetworkImage(
+                                      fadeInDuration:
+                                          Duration(milliseconds: 500),
+                                      fadeOutDuration:
+                                          Duration(milliseconds: 500),
+                                      imageUrl:
+                                          'https://plus.unsplash.com/premium_photo-1679913796054-fc4e44f35b40?q=80&w=1984&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                                      width: 200.0,
+                                      height: 200.0,
+                                      fit: BoxFit.cover,
+                                      alignment: Alignment(0.0, 0.0),
+                                    ),
+                                  ),
                                 ),
                               ),
                               Column(
@@ -236,7 +272,7 @@ class _SoundsWidgetState extends State<SoundsWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 3.0),
                                     child: Text(
-                                      'Title',
+                                      'El Pollito Pio',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -258,7 +294,7 @@ class _SoundsWidgetState extends State<SoundsWidget> {
                                     ),
                                   ),
                                   Text(
-                                    '1 Listening',
+                                    '1 Escuchando',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

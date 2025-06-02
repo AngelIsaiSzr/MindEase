@@ -1,3 +1,5 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -32,17 +34,17 @@ class _SignupWidgetState extends State<SignupWidget>
     super.initState();
     _model = createModel(context, () => SignupModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.nameTextController ??= TextEditingController();
+    _model.nameFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
+    _model.passwordTextController ??= TextEditingController();
+    _model.passwordFocusNode ??= FocusNode();
 
-    _model.textController4 ??= TextEditingController();
-    _model.textFieldFocusNode4 ??= FocusNode();
+    _model.confirmPasswordTextController ??= TextEditingController();
+    _model.confirmPasswordFocusNode ??= FocusNode();
 
     animationsMap.addAll({
       'textOnPageLoadAnimation1': AnimationInfo(
@@ -50,7 +52,7 @@ class _SignupWidgetState extends State<SignupWidget>
         effectsBuilder: () => [
           FadeEffect(
             curve: Curves.easeInOut,
-            delay: 4000.0.ms,
+            delay: 0.0.ms,
             duration: 1000.0.ms,
             begin: 0.0,
             end: 1.0,
@@ -62,7 +64,7 @@ class _SignupWidgetState extends State<SignupWidget>
         effectsBuilder: () => [
           FadeEffect(
             curve: Curves.easeInOut,
-            delay: 5000.0.ms,
+            delay: 500.0.ms,
             duration: 1000.0.ms,
             begin: 0.0,
             end: 1.0,
@@ -88,6 +90,7 @@ class _SignupWidgetState extends State<SignupWidget>
       },
       child: Scaffold(
         key: scaffoldKey,
+        resizeToAvoidBottomInset: false,
         backgroundColor: FlutterFlowTheme.of(context).secondary,
         body: Stack(
           children: [
@@ -188,8 +191,8 @@ class _SignupWidgetState extends State<SignupWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                         child: TextFormField(
-                          controller: _model.textController1,
-                          focusNode: _model.textFieldFocusNode1,
+                          controller: _model.nameTextController,
+                          focusNode: _model.nameFocusNode,
                           autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -284,7 +287,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                         .fontStyle,
                                     lineHeight: 1.2,
                                   ),
-                          validator: _model.textController1Validator
+                          validator: _model.nameTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -292,11 +295,12 @@ class _SignupWidgetState extends State<SignupWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                         child: TextFormField(
-                          controller: _model.textController2,
-                          focusNode: _model.textFieldFocusNode2,
+                          controller: _model.emailTextController,
+                          focusNode: _model.emailFocusNode,
                           autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
+                            isDense: false,
                             labelText: 'Correo',
                             labelStyle: FlutterFlowTheme.of(context)
                                 .labelMedium
@@ -389,7 +393,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                     lineHeight: 1.2,
                                   ),
                           keyboardType: TextInputType.emailAddress,
-                          validator: _model.textController2Validator
+                          validator: _model.emailTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -397,10 +401,10 @@ class _SignupWidgetState extends State<SignupWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                         child: TextFormField(
-                          controller: _model.textController3,
-                          focusNode: _model.textFieldFocusNode3,
+                          controller: _model.passwordTextController,
+                          focusNode: _model.passwordFocusNode,
                           autofocus: false,
-                          obscureText: !_model.passwordVisibility1,
+                          obscureText: !_model.passwordVisibility,
                           decoration: InputDecoration(
                             labelText: 'Contraseña',
                             labelStyle: FlutterFlowTheme.of(context)
@@ -478,12 +482,12 @@ class _SignupWidgetState extends State<SignupWidget>
                                 14.0, 0.0, 0.0, 0.0),
                             suffixIcon: InkWell(
                               onTap: () => safeSetState(
-                                () => _model.passwordVisibility1 =
-                                    !_model.passwordVisibility1,
+                                () => _model.passwordVisibility =
+                                    !_model.passwordVisibility,
                               ),
                               focusNode: FocusNode(skipTraversal: true),
                               child: Icon(
-                                _model.passwordVisibility1
+                                _model.passwordVisibility
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -507,7 +511,7 @@ class _SignupWidgetState extends State<SignupWidget>
                                         .fontStyle,
                                     lineHeight: 1.2,
                                   ),
-                          validator: _model.textController3Validator
+                          validator: _model.passwordTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -515,10 +519,10 @@ class _SignupWidgetState extends State<SignupWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                         child: TextFormField(
-                          controller: _model.textController4,
-                          focusNode: _model.textFieldFocusNode4,
+                          controller: _model.confirmPasswordTextController,
+                          focusNode: _model.confirmPasswordFocusNode,
                           autofocus: false,
-                          obscureText: !_model.passwordVisibility2,
+                          obscureText: !_model.confirmPasswordVisibility,
                           decoration: InputDecoration(
                             labelText: 'Confirmar contraseña',
                             labelStyle: FlutterFlowTheme.of(context)
@@ -596,12 +600,12 @@ class _SignupWidgetState extends State<SignupWidget>
                                 14.0, 0.0, 0.0, 0.0),
                             suffixIcon: InkWell(
                               onTap: () => safeSetState(
-                                () => _model.passwordVisibility2 =
-                                    !_model.passwordVisibility2,
+                                () => _model.confirmPasswordVisibility =
+                                    !_model.confirmPasswordVisibility,
                               ),
                               focusNode: FocusNode(skipTraversal: true),
                               child: Icon(
-                                _model.passwordVisibility2
+                                _model.confirmPasswordVisibility
                                     ? Icons.visibility_outlined
                                     : Icons.visibility_off_outlined,
                                 color: FlutterFlowTheme.of(context).alternate,
@@ -625,7 +629,8 @@ class _SignupWidgetState extends State<SignupWidget>
                                         .fontStyle,
                                     lineHeight: 1.2,
                                   ),
-                          validator: _model.textController4Validator
+                          validator: _model
+                              .confirmPasswordTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -634,7 +639,54 @@ class _SignupWidgetState extends State<SignupWidget>
                             EdgeInsetsDirectional.fromSTEB(0.0, 35.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            context.pushNamed(ChooseTopicWidget.routeName);
+                            GoRouter.of(context).prepareAuthEvent();
+                            if (_model.passwordTextController.text !=
+                                _model.confirmPasswordTextController.text) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Passwords don\'t match!',
+                                  ),
+                                ),
+                              );
+                              return;
+                            }
+
+                            final user =
+                                await authManager.createAccountWithEmail(
+                              context,
+                              _model.emailTextController.text,
+                              _model.passwordTextController.text,
+                            );
+                            if (user == null) {
+                              return;
+                            }
+
+                            await UsersRecord.collection
+                                .doc(user.uid)
+                                .update(createUsersRecordData(
+                                  email: _model.emailTextController.text,
+                                  password: _model.passwordTextController.text,
+                                  name: _model.nameTextController.text,
+                                ));
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Bienvenid@ a MindEase',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                                duration: Duration(milliseconds: 3000),
+                                backgroundColor: Color(0xFF2E2E2E),
+                              ),
+                            );
+
+                            context.goNamedAuth(
+                                HomePageWidget.routeName, context.mounted);
                           },
                           text: 'Registrarse',
                           options: FFButtonOptions(
@@ -645,51 +697,6 @@ class _SignupWidgetState extends State<SignupWidget>
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: Color(0xFF7C9A92),
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  font: GoogleFonts.alegreyaSans(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
-                                ),
-                            elevation: 0.0,
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            context.pushNamed(ChooseTopicWidget.routeName);
-                          },
-                          text: 'Ingresar como anónimo',
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 48.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 24.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: Color(0x007C9A92),
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(

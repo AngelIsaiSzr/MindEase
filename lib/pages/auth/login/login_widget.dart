@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -32,11 +33,11 @@ class _LoginWidgetState extends State<LoginWidget>
     super.initState();
     _model = createModel(context, () => LoginModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.passwordTextController ??= TextEditingController();
+    _model.passwordFocusNode ??= FocusNode();
 
     animationsMap.addAll({
       'textOnPageLoadAnimation1': AnimationInfo(
@@ -44,7 +45,7 @@ class _LoginWidgetState extends State<LoginWidget>
         effectsBuilder: () => [
           FadeEffect(
             curve: Curves.easeInOut,
-            delay: 4000.0.ms,
+            delay: 0.0.ms,
             duration: 1000.0.ms,
             begin: 0.0,
             end: 1.0,
@@ -56,7 +57,7 @@ class _LoginWidgetState extends State<LoginWidget>
         effectsBuilder: () => [
           FadeEffect(
             curve: Curves.easeInOut,
-            delay: 5000.0.ms,
+            delay: 500.0.ms,
             duration: 1000.0.ms,
             begin: 0.0,
             end: 1.0,
@@ -82,6 +83,7 @@ class _LoginWidgetState extends State<LoginWidget>
       },
       child: Scaffold(
         key: scaffoldKey,
+        resizeToAvoidBottomInset: false,
         backgroundColor: FlutterFlowTheme.of(context).secondary,
         body: Stack(
           children: [
@@ -90,6 +92,7 @@ class _LoginWidgetState extends State<LoginWidget>
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
@@ -182,8 +185,8 @@ class _LoginWidgetState extends State<LoginWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
                         child: TextFormField(
-                          controller: _model.textController1,
-                          focusNode: _model.textFieldFocusNode1,
+                          controller: _model.emailTextController,
+                          focusNode: _model.emailFocusNode,
                           autofocus: false,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -279,7 +282,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                     lineHeight: 1.2,
                                   ),
                           keyboardType: TextInputType.emailAddress,
-                          validator: _model.textController1Validator
+                          validator: _model.emailTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -287,8 +290,8 @@ class _LoginWidgetState extends State<LoginWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
                         child: TextFormField(
-                          controller: _model.textController2,
-                          focusNode: _model.textFieldFocusNode2,
+                          controller: _model.passwordTextController,
+                          focusNode: _model.passwordFocusNode,
                           autofocus: false,
                           obscureText: !_model.passwordVisibility,
                           decoration: InputDecoration(
@@ -397,7 +400,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                         .fontStyle,
                                     lineHeight: 1.2,
                                   ),
-                          validator: _model.textController2Validator
+                          validator: _model.passwordTextControllerValidator
                               .asValidator(context),
                         ),
                       ),
@@ -450,7 +453,34 @@ class _LoginWidgetState extends State<LoginWidget>
                             EdgeInsetsDirectional.fromSTEB(0.0, 45.0, 0.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            context.pushNamed(ChooseTopicWidget.routeName);
+                            GoRouter.of(context).prepareAuthEvent();
+
+                            final user = await authManager.signInWithEmail(
+                              context,
+                              _model.emailTextController.text,
+                              _model.passwordTextController.text,
+                            );
+                            if (user == null) {
+                              return;
+                            }
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Bienvenido de nuevo!',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                                duration: Duration(milliseconds: 3000),
+                                backgroundColor: Color(0xFF2E2E2E),
+                              ),
+                            );
+
+                            context.goNamedAuth(
+                                HomePageWidget.routeName, context.mounted);
                           },
                           text: 'Ingresar',
                           options: FFButtonOptions(
@@ -486,51 +516,6 @@ class _LoginWidgetState extends State<LoginWidget>
                             borderSide: BorderSide(
                               color: Colors.transparent,
                               width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            context.pushNamed(ChooseTopicWidget.routeName);
-                          },
-                          text: 'Iniciar sesión como anónimo',
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 48.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 24.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: Color(0x007C9A92),
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  font: GoogleFonts.alegreyaSans(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
-                                ),
-                            elevation: 0.0,
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
                             ),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
