@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBxQ0dif4uuhJpglR2idDsWhx_BHh_OPkI</string>
+	<string>AIzaSyCFEA5JEzshWOi50H8yX4j7k7ZOrC4rEUs</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1019484491971</string>
+	<string>331938017312</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.ics.mindease</string>
 	<key>PROJECT_ID</key>
-	<string>mindease-9c657</string>
+	<string>mindease-oficial</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mindease-9c657.firebasestorage.app</string>
+	<string>mindease-oficial.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1019484491971:ios:a8b8c3b7c231546a329276</string>
+	<string>1:331938017312:ios:bb6592d0e2daeceed14c45</string>
 </dict>
 </plist>

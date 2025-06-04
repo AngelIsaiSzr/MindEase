@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -661,14 +660,6 @@ class _SignupWidgetState extends State<SignupWidget>
                             if (user == null) {
                               return;
                             }
-
-                            await UsersRecord.collection
-                                .doc(user.uid)
-                                .update(createUsersRecordData(
-                                  email: _model.emailTextController.text,
-                                  password: _model.passwordTextController.text,
-                                  name: _model.nameTextController.text,
-                                ));
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

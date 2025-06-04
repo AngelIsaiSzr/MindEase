@@ -23,10 +23,10 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint --max-warnings=0 .",
-    "serve": "firebase -P mindease-9c657 emulators:start --only functions",
-    "shell": "firebase -P mindease-9c657 functions:shell",
+    "serve": "firebase -P mindease-oficial emulators:start --only functions",
+    "shell": "firebase -P mindease-oficial functions:shell",
     "start": "npm run shell",
-    "logs": "firebase -P mindease-9c657 functions:log",
+    "logs": "firebase -P mindease-oficial functions:log",
     "compile": "cp ../../tsconfig.template.json ./tsconfig-compile.json && tsc --project tsconfig-compile.json"
   },
   "engines": {

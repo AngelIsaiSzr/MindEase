@@ -104,7 +104,7 @@ class _SoundWidgetState extends State<SoundWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 25.0, 0.0, 25.0),
               child: Text(
-                'Sound',
+                'Canción',
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       font: GoogleFonts.alegreyaSans(
                         fontWeight: FontWeight.w500,
